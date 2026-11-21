@@ -148,11 +148,45 @@ class _NewNoteState extends ConsumerState<NewNote> {
                         SizedBox(width: 20),
                         if (widget.state == 'edit')
                           FilledButton(
-                            onPressed: () {
-                              ref
+                            onPressed: () async {
+                              final confirmed = await showDialog<bool>(
+                                context: context,
+                                builder: (dialogContext) => AlertDialog(
+                                  title: Text(deleteNoteConfirm),
+                                  content: Text(content),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(dialogContext, false),
+                                      child: Text(
+                                        cancel,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
+                                      ),
+                                    ),
+                                    FilledButton(
+                                      onPressed: () =>
+                                          Navigator.pop(dialogContext, true),
+                                      child: Text(
+                                        deleteNote,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                              if (confirmed != true) return;
+
+                              await ref
                                   .read(profileProvider.notifier)
                                   .deleteNote(widget.note!);
-                              Navigator.push(
+                              if (!context.mounted) return;
+
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => MainScreens(),

@@ -177,11 +177,47 @@ class _CreateProfileState extends ConsumerState<CreateProfile> {
                             SizedBox(width: 20),
                             if (widget.state == 'edit')
                               FilledButton(
-                                onPressed: () {
-                                  ref
+                                onPressed: () async {
+                                  final confirmed = await showDialog<bool>(
+                                    context: context,
+                                    builder: (dialogContext) => AlertDialog(
+                                      title: Text(deleteProfileConfirm),
+                                      content: Text(content),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                            dialogContext,
+                                            false,
+                                          ),
+                                          child: Text(
+                                            cancel,
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium,
+                                          ),
+                                        ),
+                                        FilledButton(
+                                          onPressed: () => Navigator.pop(
+                                            dialogContext,
+                                            true,
+                                          ),
+                                          child: Text(
+                                            deleteProfile,
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                  if (confirmed != true) return;
+                                  await ref
                                       .read(profileProvider.notifier)
                                       .deleteProfile(widget.profile!);
-                                  Navigator.push(
+                                  if (!context.mounted) return;
+
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => SelectProfile(),
@@ -201,7 +237,7 @@ class _CreateProfileState extends ConsumerState<CreateProfile> {
                               ref
                                   .read(profileProvider.notifier)
                                   .removeAllNote(widget.profile!);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => MainScreens(),

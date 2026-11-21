@@ -45,7 +45,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       isEditMode = !isEditMode;
                     });
                   },
-                  icon: Icon(isEditMode ? Icons.person : Icons.edit),
+                  icon: Icon(isEditMode ? LucideIcons.eye : LucideIcons.edit),
                 ),
         ],
       ),

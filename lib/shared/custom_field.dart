@@ -22,6 +22,7 @@ class CustomFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMultiline = fieldType.toLowerCase() == 'text';
+    final type = fieldType.toLowerCase();
 
     return Padding(
       padding: const EdgeInsets.all(12),
@@ -32,7 +33,6 @@ class CustomFormField extends StatelessWidget {
           if (value == null || value.isEmpty) {
             return 'Please enter your $fieldLabel';
           }
-          final type = fieldType.toLowerCase();
 
           if (type == 'numbers' && !RegExp(r'^[0-9]+$').hasMatch(value)) {
             return '$fieldLabel must contain only numbers';
@@ -43,7 +43,12 @@ class CustomFormField extends StatelessWidget {
           return null;
         },
         maxLength: length,
-        keyboardType: TextInputType.multiline,
+        keyboardType: isMultiline
+            ? TextInputType.multiline
+            : type == 'numbers'
+            ? TextInputType.number
+            : null,
+
         textInputAction: TextInputAction.newline,
         maxLines: isMultiline ? null : 1,
         onSaved: onSaved,

@@ -83,6 +83,21 @@ class SideDrawer extends ConsumerWidget {
               selected: isSelected,
               selectedColor: ThemeColors.accentColor,
               tileColor: isSelected ? Colors.amber[100] : null,
+              trailing: IconButton(
+                onPressed: () {
+                  ref.read(profileProvider.notifier).selectProfile(profile);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileScreen(
+                        state: 'preview',
+                        profile: profiles[index - 1],
+                      ),
+                    ),
+                  );
+                },
+                icon: Icon(LucideIcons.arrowBigRightDash),
+              ),
               onTap: () async {
                 await ref.read(profileProvider.notifier).selectProfile(profile);
               },

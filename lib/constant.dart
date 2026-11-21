@@ -53,6 +53,13 @@ String updateProfileMessage = 'Profile Updated';
 String nameField = 'Your Name';
 String ageField = 'Your Age';
 
+// Confirmation Text
+String deleteNoteConfirm = 'Delete Note?';
+String deleteProfileConfirm = 'Delete Profile?';
+String content =
+    'Are you sure you want to delete this? \n This action cannot be undone.';
+String cancel = 'Cancel';
+
 // Navigation labels
 String profiles = 'Profiles';
 String home = 'Home';

@@ -44,7 +44,7 @@ class _ManageNoteState extends State<ManageNote> {
                       isEditMode = !isEditMode;
                     });
                   },
-                  icon: Icon(isEditMode ? LucideIcons.edit : LucideIcons.eye),
+                  icon: Icon(isEditMode ? LucideIcons.eye : LucideIcons.edit),
                 ),
         ],
       ),
